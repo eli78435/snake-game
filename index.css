@@ -1,0 +1,44 @@
+*, *::before, *::after {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+body {
+    background-color: whitesmoke;
+}
+
+header 
+{
+    padding: 3vh 0 3vh 0;
+}
+
+header h1 {
+    text-align: center;
+    text-transform: uppercase;
+}
+
+header h2 {
+    padding-top: 3vh;
+    text-align: center;
+    color: transparent;
+    text-transform: uppercase;
+}
+
+main {
+    min-height: 80vh;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+
+}
+
+.bord_container {
+}
+
+.canvas {
+    width: 70vh;
+    height: 70vh;
+    background-color: rgb(183, 155, 112);
+    outline: black 3px solid;
+}

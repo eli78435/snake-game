@@ -26,7 +26,7 @@ header h2 {
 }
 
 main {
-    min-height: 80vh;
+    padding-top: 3px;
     display: flex;
     align-items: center;
     justify-content: center;
@@ -37,8 +37,8 @@ main {
 }
 
 .canvas {
-    width: 70vh;
-    height: 70vh;
+    width: min(70vh, 70vw);
+    height: min(70vh, 70vw);
     background-color: rgb(183, 155, 112);
     outline: black 3px solid;
 }

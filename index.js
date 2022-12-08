@@ -78,6 +78,25 @@ class BoardGame {
     }
 
     setDirection(direction) {
+        const logInputNotValid = (d) => console.trace(`input not valid. direction: ${d}, current direction: ${this.direction}`);
+
+        if(this.direction == Direction.Up && direction == Direction.Down) {
+            logInputNotValid(direction);
+            return
+        }
+        else if(this.direction == Direction.Left && direction == Direction.Right){
+            logInputNotValid(direction);
+            return
+        }
+        else if(this.direction == Direction.Right && direction == Direction.Left){
+            logInputNotValid(direction);
+            return
+        }
+        else if(this.direction == Direction.Down && direction == Direction.Up){
+            logInputNotValid(direction);
+            return
+        }
+
         this.direction = direction;
     }
 
@@ -85,7 +104,7 @@ class BoardGame {
         const [c, r] = this.snake[0];
         if(c < 0 || r < 0) {
             this.running = false;
-        } else if(this.columns < c || this.rows < r) {
+        } else if(this.columns <= c+1 || this.rows <= r+1) {
             this.running = false;
         }
     }

@@ -18,11 +18,23 @@ header h1 {
     text-transform: uppercase;
 }
 
-header h2 {
+/* header h2 {
     padding-top: 3vh;
     text-align: center;
     color: transparent;
     text-transform: uppercase;
+} */
+
+header div {
+    display: flex;
+    padding-top: 3vh;
+    justify-content: center;
+    color: transparent;
+    text-transform: uppercase;
+}
+
+header div label {
+    margin-left: 0.5rem;
 }
 
 main {
@@ -34,6 +46,10 @@ main {
 }
 
 .bord_container {
+}
+
+.header_startAgain {
+    display: none;
 }
 
 .canvas {

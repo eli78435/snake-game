@@ -65,21 +65,28 @@ class SnakeGame {
     }
 
     updateSnake() {
+        const newCell = this.getNextCell();
+        this.moveAndEat(newCell);
+    }
+
+    getNextCell() {
         const [c, r] = this.snake[0];
-        
+
         if(this.direction === Direction.Up) {
             const newCell = [c, r-1];
-            this.moveAndEat(newCell);
+            return newCell;
         } else if(this.direction === Direction.Right) {
             const newCell = [c+1, r];
-            this.moveAndEat(newCell);
+            return newCell;
         } else if(this.direction === Direction.Down) {
             const newCell = [c, r+1];
-            this.moveAndEat(newCell);
+            return newCell;
         } else if(this.direction === Direction.Left) {
             const newCell = [c-1, r];
-            this.moveAndEat(newCell);
+            return newCell;
         }
+
+        throw new Error(`next cell option ${this.direction} is not supported`);
     }
 
     moveAndEat(newCell) {
@@ -126,8 +133,17 @@ class SnakeGame {
         const [c, r] = this.snake[0];
         if(c < 0 || r < 0) {
             this.running = false;
+            return;
         } else if(this.columns <= c+1 || this.rows <= r+1) {
             this.running = false;
+            return;
+        }
+
+        const [sc, sr] = this.getNextCell();
+        const indexInSnake = this.snake.findIndex(item => item[0] === sc && item[1] === sr);
+        if(indexInSnake != -1) {
+            this.running = false;
+            return -1;
         }
     }
 

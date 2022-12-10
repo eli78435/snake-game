@@ -8,17 +8,23 @@ const Direction = {
 }
 
 class SnakeGame {
-    constructor(canvas) {
+    constructor(canvasElement, scoreElement, bestScoreElement) {
         this.columns = 31;
         this.rows = 31;
 
-        this.boardCanvas = canvas;
+        this.direction = Direction.Up;
+        this.boardCanvasElement = canvasElement;
+        this.scoreElement = scoreElement;
+        this.bestScoreElement = bestScoreElement;
+        this.bsetScore = 0;
+        this.score = 0;
 
         this.init();
     }
 
     init = () => {
         this.direction = Direction.Up;
+        this.score = 0;
 
         let centerC = Math.floor((this.columns / 2) + 1);
         let centerR = Math.floor((this.rows / 2) - 1);
@@ -31,7 +37,7 @@ class SnakeGame {
     }
 
     draw() {
-        const cv = this.boardCanvas;
+        const cv = this.boardCanvasElement;
         const pixelWidth = cv.width;
         const pixelHeight = cv.height;
 
@@ -62,6 +68,9 @@ class SnakeGame {
             const topRight = this.getCellTopPosition(r, cellHight);
             ctx.fillRect(topLeft, topRight, cellWidth, cellHight);
         });
+
+        this.scoreElement.innerText = this.score;
+        this.bestScoreElement.innerText = this.bsetScore;
     }
 
     updateSnake() {
@@ -97,6 +106,7 @@ class SnakeGame {
         if(existingStoneIndex !== -1) {
             this.stones.splice(existingStoneIndex, 1);
             remoeTail = false;
+            this.score++;
         }
 
         this.snake.unshift(newCell);
@@ -133,9 +143,11 @@ class SnakeGame {
         const [c, r] = this.snake[0];
         if(c < 0 || r < 0) {
             this.running = false;
+            this.updateBestScore();
             return;
         } else if(this.columns <= c+1 || this.rows <= r+1) {
             this.running = false;
+            this.updateBestScore();
             return;
         }
 
@@ -143,8 +155,13 @@ class SnakeGame {
         const indexInSnake = this.snake.findIndex(item => item[0] === sc && item[1] === sr);
         if(indexInSnake != -1) {
             this.running = false;
-            return -1;
+            this.updateBestScore();
+            return;
         }
+    }
+
+    updateBestScore() {
+        this.bsetScore = Math.max(this.score, this.bsetScore);
     }
 
     anotate() {
@@ -198,7 +215,9 @@ let mainBorder;
 
 window.addEventListener("load", (event) => {  
     const boardCanvas = document.getElementById("mainCanvas");
-    mainBorder = new SnakeGame(boardCanvas)
+    const scoreElement = document.getElementById("scoreValue");
+    const bestScoreElement = document.getElementById("bsetScoreValue");
+    mainBorder = new SnakeGame(boardCanvas, scoreElement, bestScoreElement);
     mainBorder.draw();
 
     const startAgainBtn = document.getElementById("startAgainButton");

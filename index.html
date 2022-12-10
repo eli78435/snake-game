@@ -10,10 +10,17 @@
 <body>
     <header>
         <h1>snake-game</h1>
+        <div>
+            <span>bset score:</span>
+            <span id="bsetScoreValue">0</span>
+        </div>
+        <div>
+            <span>score:</span>
+            <span id="scoreValue">0</span>
+        </div>
         <div id="header_gameOver">
-            <h2>game over</h2>
-            <button id="startAgainButton" class="header_startAgain">dfs</button>
-            <label for="startAgainButton">start again</label>
+            <button id="startAgainButton" class="header_startAgain"></button>
+            <label for="startAgainButton">Game Over - Click to Start Again</label>
         </div>
     </header>
     <main>
@@ -22,7 +29,6 @@
         </div>
     </main>
     <footer>
-        
     </footer>
     <script src="./index.js" lang="js"></script>
 </body>

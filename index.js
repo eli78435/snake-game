@@ -247,6 +247,8 @@ window.addEventListener("keydown", (event) => {
         mainBorder.setDirection(Direction.Down);
     } else if(event.code === "ArrowLeft") {
         mainBorder.setDirection(Direction.Left);
+    } else if(event.code === 'KeyR') {
+        mainBorder.init();
     }
 });
 

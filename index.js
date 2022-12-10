@@ -22,7 +22,7 @@ class SnakeGame {
 
         let centerC = Math.floor((this.columns / 2) + 1);
         let centerR = Math.floor((this.rows / 2) - 1);
-        this.snake = [[centerC,centerR++], [centerC,centerR++], [centerC,8]];
+        this.snake = [[centerC,centerR++], [centerC,centerR++], [centerC,centerR]];
         this.stones = [];
         this.running = true;
 
@@ -65,33 +65,38 @@ class SnakeGame {
     }
 
     updateSnake() {
-        const results = {
-            "added": null,
-            "removed": null
-        };
-
         const [c, r] = this.snake[0];
-    
+        
         if(this.direction === Direction.Up) {
             const newCell = [c, r-1];
-            this.snake.unshift(newCell);
-            results.added = newCell;
+            this.moveAndEat(newCell);
         } else if(this.direction === Direction.Right) {
             const newCell = [c+1, r];
-            this.snake.unshift(newCell);
-            results.added = newCell;
+            this.moveAndEat(newCell);
         } else if(this.direction === Direction.Down) {
             const newCell = [c, r+1];
-            this.snake.unshift(newCell);
-            results.added = newCell;
+            this.moveAndEat(newCell);
         } else if(this.direction === Direction.Left) {
             const newCell = [c-1, r];
-            this.snake.unshift(newCell);
-            results.added = newCell;
+            this.moveAndEat(newCell);
         }
-        
-        results.removed = this.snake.pop();
-        return results;
+    }
+
+    moveAndEat(newCell) {
+        const [c, r] = newCell;
+
+        let remoeTail = true;
+        const existingStoneIndex = this.stones.findIndex(item => item[0] === c && item[1] === r);
+        if(existingStoneIndex !== -1) {
+            this.stones.splice(existingStoneIndex, 1);
+            remoeTail = false;
+        }
+
+        this.snake.unshift(newCell);
+
+        if(remoeTail) {
+            this.snake.pop();
+        }
     }
 
     setDirection(direction) {
@@ -190,7 +195,7 @@ window.addEventListener("load", (event) => {
 
     setInterval(mainBorder.doMove, 150);
 
-    setInterval(mainBorder.addStone, 600);
+    setInterval(mainBorder.addStone, 2000);
 
     console.log('end load event listener');
 });

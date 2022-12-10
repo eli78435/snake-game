@@ -145,7 +145,7 @@ class SnakeGame {
             this.running = false;
             this.updateBestScore();
             return;
-        } else if(this.columns <= c+1 || this.rows <= r+1) {
+        } else if(this.columns <= c || this.rows <= r) {
             this.running = false;
             this.updateBestScore();
             return;

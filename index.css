@@ -26,17 +26,17 @@ header h1 {
     text-transform: uppercase;
 }
 
-.header_gameOver {
+#header_gameOver {
     display: flex;
-    flex-direction: column;
-    padding-top: 6vh;
-    justify-content: center;
+    padding-top: 1vh;
+    align-items: center;
     color: transparent;
     text-transform: uppercase;
 }
 
-.header_gameOver label {
+#header_gameOver label {
     text-transform: uppercase;
+    cursor: grab;
 }
 
 main {
@@ -45,6 +45,11 @@ main {
     align-items: center;
     justify-content: center;
 
+}
+
+header div span:first-child {
+    text-transform: capitalize;
+    font-weight: bolder;
 }
 
 .bord_container {

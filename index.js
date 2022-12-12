@@ -19,6 +19,11 @@ class SnakeGame {
         this.bsetScore = 0;
         this.score = 0;
 
+        const bestScoreFromCache = localStorage.getItem('bsetScore');
+        if(bestScoreFromCache) {
+            this.bsetScore = bestScoreFromCache
+        }
+
         this.init();
     }
 
@@ -162,6 +167,7 @@ class SnakeGame {
 
     updateBestScore() {
         this.bsetScore = Math.max(this.score, this.bsetScore);
+        localStorage.setItem('bsetScore', this.bsetScore)
     }
 
     anotate() {

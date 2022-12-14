@@ -13,6 +13,7 @@ class SnakeGame {
         this.rows = 31;
 
         this.direction = Direction.Up;
+        this.suggestedDirection = this.direction
         this.boardCanvasElement = canvasElement;
         this.scoreElement = scoreElement;
         this.bestScoreElement = bestScoreElement;
@@ -29,6 +30,7 @@ class SnakeGame {
 
     init = () => {
         this.direction = Direction.Up;
+        this.suggestedDirection = this.direction
         this.score = 0;
 
         let centerC = Math.floor((this.columns / 2) + 1);
@@ -141,7 +143,7 @@ class SnakeGame {
             return;
         }
 
-        this.direction = direction;
+        this.suggestedDirection = direction;
     }
 
     validate() {
@@ -179,6 +181,9 @@ class SnakeGame {
     
     doMove = () => {
         if(this.running) {
+            console.info(`move: ${this.direction} -> ${this.suggestedDirection}`);
+            this.direction = this.suggestedDirection;
+
             this.updateSnake();
             this.draw();
             this.validate();
@@ -258,5 +263,32 @@ window.addEventListener("keydown", (event) => {
     }
 });
 
+window.addEventListener("touchstart", (event) => {
+    const boardCanvas = document.getElementById("mainCanvas");
+    if(event?.target === boardCanvas && event?.changedTouches?.length === 1) {
+        const x = event.changedTouches[0].clientX;
+        const y = event.changedTouches[0].clientY;
 
+        const canvasLeft = boardCanvas.offsetLeft;
+        const canvasTop = boardCanvas.offsetTop;
+        const canvasWidth = boardCanvas.clientWidth;
+        const canvasHeight = boardCanvas.clientHeight;
+
+        const moveTopWeight = y - canvasTop;
+        const moveRightWeight = (canvasLeft + canvasWidth) - x;
+        const moveBottomWeight = (canvasTop + canvasHeight) - y;
+        const moveLeftWeight = x - canvasLeft;
+        
+        const direction = [
+            {"direction": Direction.Up, "weight": moveTopWeight},
+            {"direction": Direction.Right, "weight": moveRightWeight},
+            {"direction": Direction.Down, "weight": moveBottomWeight},
+            {"direction": Direction.Left, "weight": moveLeftWeight},
+        ]
+            .reduce((prev, curr) => prev.weight < curr.weight ? prev : curr)
+            .direction;
+
+        mainBorder.setDirection(direction);
+    }
+});
 

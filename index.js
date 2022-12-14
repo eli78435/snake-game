@@ -274,10 +274,23 @@ window.addEventListener("touchstart", (event) => {
         const canvasWidth = boardCanvas.clientWidth;
         const canvasHeight = boardCanvas.clientHeight;
 
-        const moveTopWeight = y - canvasTop;
-        const moveRightWeight = (canvasLeft + canvasWidth) - x;
-        const moveBottomWeight = (canvasTop + canvasHeight) - y;
-        const moveLeftWeight = x - canvasLeft;
+        // const moveTopWeight = y - canvasTop;
+        // const moveRightWeight = (canvasLeft + canvasWidth) - x;
+        // const moveBottomWeight = (canvasTop + canvasHeight) - y;
+        // const moveLeftWeight = x - canvasLeft;
+
+        const cellWidht =  canvasWidth / mainBorder.columns;
+        const cellHeight = canvasHeight / mainBorder.rows;
+        const snakePositionX = cellWidht * mainBorder.snake[0][0];
+        const snakePositionY = cellHeight * mainBorder.snake[0][1];
+
+        const snakeAbsPositionX = snakePositionX + canvasLeft;
+        const snakeAbsPositionY = snakePositionY + canvasTop;
+
+        const moveTopWeight = snakeAbsPositionY - y;
+        const moveRightWeight = x - snakeAbsPositionX;
+        const moveBottomWeight = y - snakeAbsPositionY;
+        const moveLeftWeight = snakeAbsPositionX - x;
         
         const direction = [
             {"direction": Direction.Up, "weight": moveTopWeight},
@@ -285,7 +298,8 @@ window.addEventListener("touchstart", (event) => {
             {"direction": Direction.Down, "weight": moveBottomWeight},
             {"direction": Direction.Left, "weight": moveLeftWeight},
         ]
-            .reduce((prev, curr) => prev.weight < curr.weight ? prev : curr)
+            .filter(({direction, weight}) => weight > 0)
+            .reduce((prev, curr) => prev.weight < curr.weight ? curr : prev)
             .direction;
 
         mainBorder.setDirection(direction);

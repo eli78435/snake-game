@@ -9,8 +9,8 @@ const Direction = {
 
 class SnakeGame {
     constructor(canvasElement, scoreElement, bestScoreElement) {
-        this.columns = 31;
-        this.rows = 31;
+        this.columns = 27;
+        this.rows = 27;
 
         this.direction = Direction.Up;
         this.suggestedDirection = this.direction
@@ -146,6 +146,10 @@ class SnakeGame {
         this.suggestedDirection = direction;
     }
 
+    setDirections(directions) {
+        directions.forEach(d => this.setDirection(d));
+    }
+
     validate() {
         const [c, r] = this.snake[0];
         if(c < 0 || r < 0) {
@@ -239,7 +243,7 @@ window.addEventListener("load", (event) => {
     const drawFunc = mainBorder.draw.bind(mainBorder);
     setInterval(drawFunc, 1000/60);
 
-    setInterval(mainBorder.doMove, 150);
+    setInterval(mainBorder.doMove, 120);
 
     setInterval(mainBorder.addStone, 2000);
 
@@ -292,17 +296,18 @@ window.addEventListener("touchstart", (event) => {
         const moveBottomWeight = y - snakeAbsPositionY;
         const moveLeftWeight = snakeAbsPositionX - x;
         
-        const direction = [
+        const directions = [
             {"direction": Direction.Up, "weight": moveTopWeight},
             {"direction": Direction.Right, "weight": moveRightWeight},
             {"direction": Direction.Down, "weight": moveBottomWeight},
             {"direction": Direction.Left, "weight": moveLeftWeight},
         ]
             .filter(({direction, weight}) => weight > 0)
-            .reduce((prev, curr) => prev.weight < curr.weight ? curr : prev)
-            .direction;
+            .sort((a, b) => a.weight < b.weight ? -1 : 1)
+            .slice(0, 2)
+            .map(d => d.direction);
 
-        mainBorder.setDirection(direction);
+        mainBorder.setDirections(directions);
     }
 });
 

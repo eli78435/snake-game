@@ -65,3 +65,12 @@ header div span:first-child {
     background-color: rgb(183, 155, 112);
     outline: black 3px solid;
 }
+
+@media only screen and (max-width: 500px) {
+    .canvas {
+        width: min(90vh, 90vw);
+        height: min(90vh, 90vw);
+        background-color: rgb(183, 155, 112);
+        outline: black 3px solid;
+    }
+}

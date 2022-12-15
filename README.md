@@ -5,6 +5,8 @@ Move using touch and arrows (keyboard)
 
 click [snake-game](https://eli78435.github.io/snake-game/) to start playing online
 
-![snake-game](https://eli78435.github.io/snake-game/snake_board_screenshot.jpg)
-
 ## No Installation
+
+<p align="center">
+  <img src="snake_board_screenshot.jpg" alt="drawing" width="600"/>
+</p>

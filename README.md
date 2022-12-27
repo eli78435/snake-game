@@ -1,7 +1,7 @@
 # Snake
 
 Vanilla JS snake game. The snake's goal is to eat and fill its bodies as mutch as posible
-Move using touch and arrows (keyboard)
+Move using touch and keyboard (arrows)
 
 click [snake-game](https://eli78435.github.io/snake-game/) to start playing online
 
